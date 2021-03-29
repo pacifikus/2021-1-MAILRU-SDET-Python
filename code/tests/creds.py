@@ -1,2 +1,2 @@
 LOGIN = 'masterkristall@gmail.com'
-PASS = 'qweqwe123'
+PASS = '123123qwe'

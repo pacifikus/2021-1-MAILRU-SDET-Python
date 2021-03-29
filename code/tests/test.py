@@ -1,24 +1,19 @@
 import pytest
 from base import BaseCase
-from ..ui.locators import basic_locators
 
 
 class TestOne(BaseCase):
 
     @pytest.mark.UI
     def test_login(self):
-        ...
+        self.login()
+        self.check_page(self.driver.current_url,
+                        'https://target.my.com/dashboard')
+        self.logout()
+        self.driver.save_screenshot('after_login.png')
 
     @pytest.mark.UI
     def test_logout(self):
-        ...
-
-    @pytest.mark.UI
-    def test_change_contact_info(self):
-        ...
-
-    @pytest.mark.UI
-    def test_main_pages(self):
-        ...
-
-
+        self.login()
+        self.logout()
+        self.check_page(self.driver.current_url, 'https://target.my.com/')
