@@ -1,18 +1,26 @@
 from selenium.webdriver.common.by import By
 
-LOGIN_BUTTON_LOCATOR = (By.XPATH,
-                        '/html/body/div[1]/div[1]/div[1]/div/div/'
-                        'div/div/div/div[2]/div/div[1]')
-LOGIN_INPUT_LOCATOR = (By.XPATH,
-                       '/html/body/div[2]/div/div[2]/div/form/div/'
-                       'div[1]/input')
-PASS_INPUT_LOCATOR = (By.XPATH,
-                      '/html/body/div[2]/div/div[2]/div/form/div/div[2]/input')
-LOGIN_SUBMIT_LOCATOR = (By.XPATH,
-                        '/html/body/div[2]/div/div[2]/div/div[4]/div[1]')
-
-LOGOUT_MENU_LOCATOR = (By.XPATH,
-                       '/html/body/div[1]/div/div[1]/div/div/div/div[3]')
-LOGOUT_LINK_LOCATOR = (By.XPATH,
-                       '/html/body/div[1]/div/div[1]/div/div/'
-                       'div/div[3]/ul/li[2]/a')
+LOGIN_BUTTON_LOCATOR = (
+    By.XPATH,
+    "//div[contains(@class, 'responseHead-module-button')]"
+)
+LOGIN_INPUT_LOCATOR = (
+    By.XPATH,
+    "//input[contains(@class, 'authForm-module-input')]"
+)
+PASS_INPUT_LOCATOR = (
+    By.XPATH,
+    "//input[contains(@class, 'authForm-module-inputPassword')]"
+)
+LOGIN_SUBMIT_LOCATOR = (
+    By.XPATH,
+    "//div[contains(@class, 'authForm-module-button')]"
+)
+LOGOUT_MENU_LOCATOR = (
+    By.XPATH,
+    "//div[contains(@class, 'right-module-rightButton')]"
+)
+LOGOUT_LINK_LOCATOR = (
+    By.LINK_TEXT,
+    "ВЫЙТИ"
+)

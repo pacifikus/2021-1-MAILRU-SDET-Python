@@ -1,5 +1,6 @@
 import pytest
 from base import BaseCase
+from basic_locators import LOGIN_BUTTON_LOCATOR, LOGOUT_MENU_LOCATOR
 
 
 class TestOne(BaseCase):
@@ -7,13 +8,10 @@ class TestOne(BaseCase):
     @pytest.mark.UI
     def test_login(self):
         self.login()
-        self.check_page(self.driver.current_url,
-                        'https://target.my.com/dashboard')
-        self.logout()
-        self.driver.save_screenshot('after_login.png')
+        self.check_page_locator(LOGOUT_MENU_LOCATOR)
 
     @pytest.mark.UI
     def test_logout(self):
         self.login()
         self.logout()
-        self.check_page(self.driver.current_url, 'https://target.my.com/')
+        self.check_page_locator(LOGIN_BUTTON_LOCATOR)

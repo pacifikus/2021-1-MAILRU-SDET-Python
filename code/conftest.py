@@ -12,7 +12,7 @@ def config(request):
     return {'url': url}
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='function')
 def driver(config):
     url = config['url']
     options = webdriver.ChromeOptions()
