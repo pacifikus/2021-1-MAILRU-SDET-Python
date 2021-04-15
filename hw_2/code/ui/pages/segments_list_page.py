@@ -26,8 +26,3 @@ class SegmentListPage(BasePage):
             return False
         except TimeoutException:
             return True
-    # return True
-    # print(elem.value_of_css_property("display"))
-    # return elem.value_of_css_property("display") != "none"
-    # except TimeoutException:
-    # return False

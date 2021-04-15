@@ -9,8 +9,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from ..locators.basic_locators import LoginPageLocators
 
 CLICK_RETRY = 3
-BASE_TIMEOUT = 5
-
+BASE_TIMEOUT = 10
 
 logger = logging.getLogger('test')
 
@@ -22,7 +21,11 @@ class BasePage(object):
         self.driver = driver
         logger.info(f'{self.__class__.__name__} page is opening...')
 
-    def find(self, locator, timeout=None):
+    def find(self, locator, timeout=None, has_to_be_clickable=False):
+        if has_to_be_clickable:
+            return self.wait(timeout).until(
+                EC.element_to_be_clickable(locator)
+            )
         return self.wait(timeout).until(
             EC.presence_of_element_located(locator)
         )
@@ -54,10 +57,12 @@ class BasePage(object):
                 if i == CLICK_RETRY - 1:
                     raise
 
-    def send_keys(self, locator, key, timeout=None):
-        element = self.find(locator, timeout=timeout)
+    def send_keys(self, locator, key, timeout=None, has_to_be_clickable=False):
+        element = self.find(locator, timeout=timeout,
+                            has_to_be_clickable=has_to_be_clickable)
         element.send_keys(key)
 
+    @allure.step("Trying to log in")
     def login(self, login_value, pass_value):
         self.click(self.locators.LOGIN_BUTTON_LOCATOR)
         self.send_keys(self.locators.LOGIN_INPUT_LOCATOR, login_value)

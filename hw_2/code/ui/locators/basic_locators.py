@@ -37,7 +37,14 @@ class DashboardPageLocators:
         By.XPATH,
         "//div[contains(@class, 'dashboard-module-createButtonWrap')]"
     )
-
+    CLEAR_CAMPAIGN_TITLE_LOCATOR = (
+        By.XPATH,
+        "//div[@class='input__clear js-input-clear']"
+    )
+    TITLE_CAMPAIGN_INPUT_LOCATOR = (
+        By.XPATH,
+        "//input[contains(@class, 'input__inp')]"
+    )
     TRAFFIC_TYPE_ITEM_LOCATOR = (
         By.XPATH,
         "//div[contains(@class, '_traffic')]"
@@ -82,6 +89,13 @@ class DashboardPageLocators:
         By.XPATH,
         "//li[@data-id='8']"
     )
+
+    def create_campaign_cell_locator(self, campaign_name):
+        return (
+            By.XPATH,
+            f"//a[contains(@class, 'nameCell-module-campaignNameLink') "
+            f"and @title='{campaign_name}']"
+        )
 
 
 class SegmentsPageLocators:

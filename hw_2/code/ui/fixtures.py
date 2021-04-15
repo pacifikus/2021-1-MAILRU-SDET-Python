@@ -51,7 +51,7 @@ def driver(config, test_dir):
     browser.get(url)
     browser.maximize_window()
     yield browser
-    browser.close()
+    browser.quit()
 
 
 @pytest.fixture(scope='function', autouse=True)
