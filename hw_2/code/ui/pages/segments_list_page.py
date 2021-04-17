@@ -9,10 +9,13 @@ class SegmentListPage(BasePage):
     locators = SegmentsPageLocators()
 
     @allure.step('Adding new segment')
-    def add_segment(self):
+    def add_segment(self, segment_name):
         self.click(self.locators.NEW_SEGMENT_LINK_LOCATOR)
         self.click(self.locators.SEGMENT_SOURCE_CHECKBOX_LOCATOR)
         self.click(self.locators.ADD_SEGMENT_BUTTON_LOCATOR)
+        title = self.find(self.locators.TITLE_SEGMENT_INPUT_LOCATOR)
+        title.click()
+        title.send_keys(segment_name)
         self.click(self.locators.CREATE_SEGMENT_BUTTON_LOCATOR)
 
     @allure.step('Removing the added segment')

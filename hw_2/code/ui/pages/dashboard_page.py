@@ -1,6 +1,7 @@
 import os
 
 import allure
+from selenium.common.exceptions import TimeoutException
 
 from ..locators.basic_locators import DashboardPageLocators
 from ..pages.base_page import BasePage
@@ -16,7 +17,7 @@ class DashboardPage(BasePage):
         return SegmentListPage(self.driver)
 
     @allure.step('Adding new campaign')
-    def add_campaign(self, campaign_name='test'):
+    def add_campaign(self, campaign_name):
         target_url = 'https://postnauka.ru/'
         template = 'test'
         image_path = os.path.join(os.path.dirname(__file__), 'img.jpg')
@@ -41,5 +42,8 @@ class DashboardPage(BasePage):
 
     def is_campaign_exists(self, campaign_name):
         locator = self.locators.create_campaign_cell_locator(campaign_name)
-        self.find(locator, timeout=20)
-        return True
+        try:
+            self.find(locator, timeout=20)
+            return True
+        except TimeoutException:
+            return False

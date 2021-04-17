@@ -37,7 +37,7 @@ class TestSegments(BaseCase):
     def test_add_segment(self):
 
         segments_page = self.dashboard_page.go_to_segments()
-        segments_page.add_segment()
+        segments_page.add_segment('test')
         assert segments_page.has_segments()
 
         segments_page.remove_segment()

@@ -111,6 +111,14 @@ class SegmentsPageLocators:
         By.XPATH,
         "//div[contains(@class, 'adding-segments-modal__btn')]"
     )
+    TITLE_SEGMENT_INPUT_LOCATOR = (
+        By.XPATH,
+        "//input[@class='input__inp')]"
+    )
+    TITLE_SEGMENT_INPUT_LOCATOR = (
+        By.XPATH,
+        "//div[@class='input input_create-segment-form'] //input"
+    )
     CREATE_SEGMENT_BUTTON_LOCATOR = (
         By.XPATH,
         "//button[contains(@class, 'button_submit')]"
