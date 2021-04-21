@@ -1,2 +1,5 @@
 pytest==6.2.2
 selenium==4.0.0.b2
+pytest-xdist==2.2.1
+allure-pytest==2.8.40
+webdriver-manager==3.3.0
