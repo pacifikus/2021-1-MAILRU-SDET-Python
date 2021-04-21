@@ -48,7 +48,7 @@ class TestSegments(BaseCase):
     @pytest.mark.UI
     def test_remove_segment(self):
         segments_page = self.dashboard_page.go_to_segments()
-        segments_page.add_segment()
+        segments_page.add_segment('test')
         segments_page.remove_segment()
         assert not segments_page.has_segments()
 
