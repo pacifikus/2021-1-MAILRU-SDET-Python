@@ -20,7 +20,7 @@ def credentials():
 
 @pytest.fixture(scope='function')
 def api_client(config):
-    return ApiClient(config['url'])
+    return ApiClient()
 
 
 @pytest.fixture(scope='session')

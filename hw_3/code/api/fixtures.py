@@ -15,7 +15,7 @@ class UnsupportedBrowserType(Exception):
 
 @pytest.fixture(scope='session')
 def cookies(credentials, config):
-    api_client = ApiClient(config['url'])
+    api_client = ApiClient()
     api_client.post_login(*credentials)
 
     cookies_list = []

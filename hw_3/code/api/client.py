@@ -1,4 +1,5 @@
 import logging
+import uuid
 
 import requests
 
@@ -21,9 +22,7 @@ class InvalidLoginException(Exception):
 
 class ApiClient:
 
-    def __init__(self, base_url):
-        print(base_url)
-        self.base_url = base_url
+    def __init__(self):
         self.session = requests.Session()
 
         self.csrf_token = None
@@ -62,14 +61,18 @@ class ApiClient:
                                    data=data,
                                    json=json,
                                    headers=headers)
+
         return res
+
+    def _generate_segment_name(self):
+        return str(uuid.uuid4())
 
     @property
     def post_headers(self):
         return {'X-CSRFToken': self.csrf_token}
 
     @property
-    def post_headers_1(self):
+    def json_headers(self):
         return {'Content-Type': 'application/json; charset=UTF-8'}
 
     def get_token(self):
@@ -96,8 +99,10 @@ class ApiClient:
         self.csrf_token = self.get_token()
         return result
 
-    def add_segment(self, name):
+    def add_segment(self):
         url = 'https://target.my.com/api/v2/remarketing/segments.json'
+
+        name = self._generate_segment_name()
 
         data = {
             'logicType': "or",
@@ -114,22 +119,18 @@ class ApiClient:
                 }
             ]
         }
+        self.post_headers['Content-Type'] = 'application/json'
         res = self._request('POST', url, headers=self.post_headers, json=data)
-        print(res.json())
-        return res
+        return res, res.json()['id']
 
-    def is_segment_exists(self, name):
+    @property
+    def segments_ids(self):
         res = self._request('GET',
                             'https://target.my.com/api/v2'
                             '/remarketing/segments.json?limit=500')
-        return name in [x['name'] for x in res.json()['items']]
+        return [x['id'] for x in res.json()['items']]
 
-    def remove_segment(self, name):
-        res = self._request('GET',
-                            'https://target.my.com/api/v2'
-                            '/remarketing/segments.json?limit=500')
-        segment_id = [x['id'] for x in res.json()['items']
-                      if x['name'] == name][0]
+    def remove_segment(self, segment_id):
         return self._request('DELETE',
                              f'https://target.my.com/api/v2'
                              f'/remarketing/segments/{segment_id}.json',

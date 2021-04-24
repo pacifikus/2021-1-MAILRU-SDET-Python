@@ -1,7 +1,5 @@
 import pytest
 
-blog_id = 350
-
 
 class ApiBase:
     authorize = True
