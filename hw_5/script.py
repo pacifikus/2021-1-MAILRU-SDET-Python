@@ -4,7 +4,7 @@ import json
 parser = argparse.ArgumentParser()
 parser.add_argument('path')
 parser.add_argument('--total', action='store_true')
-parser.add_argument('--by-type', dest='by_type')
+parser.add_argument('--by-type', action='store_true')
 parser.add_argument('--top10', action='store_true')
 parser.add_argument('--top4xx', action='store_true')
 parser.add_argument('--top5xx', action='store_true')
@@ -21,12 +21,16 @@ def count_total():
     return str(len(requests))
 
 
-def count_by_type(request_type):
-    count = 1
+def count_by_type():
+    temp_dict = {}
     for request in requests:
-        if request[5][1:] == request_type:
-            count += 1
-    return f'{request_type} - {count}'
+        request_type = request[5][1:]
+        if request_type in temp_dict:
+            temp_dict[request_type] += 1
+        elif len(request_type) < 7:
+            temp_dict[request_type] = 1
+    return [f'{request_type} - {count}'
+            for request_type, count in temp_dict.items()]
 
 
 def top_10():
@@ -90,7 +94,7 @@ result = {}
 if args.total:
     result['Total'] = count_total()
 if args.by_type:
-    result['By type'] = count_by_type(args.by_type)
+    result['By type'] = count_by_type()
 if args.top10:
     result['top10'] = top_10()
 if args.top4xx:
@@ -106,7 +110,7 @@ else:
         if 'Total' in result:
             print_data('Total requests count:\n', out, [str(result['Total'])])
         if 'By type' in result:
-            print_data(f'Requests count by type {args.by_type}:\n', out, [str(result['By type'])])
+            print_data(f'Requests count by types:\n', out, result['By type'])
         if 'top10' in result:
             print_data(f'Top 10 most frequent:', out, result['top10'])
         if 'top4xx' in result:
