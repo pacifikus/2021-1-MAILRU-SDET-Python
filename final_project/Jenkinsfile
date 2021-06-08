@@ -1,0 +1,35 @@
+pipeline {
+  agent any
+  stages {
+   stage('Build') {
+      steps {
+        echo 'Building..'
+        bat 'docker-compose up -d '
+        bat 'docker run -i -t -d --rm --name selenoid_final_project \
+            --network final-project-network \
+            -p 4444:4444 \
+            -v //var/run/docker.sock:/var/run/docker.sock \
+            -v C:/Users/maste/Desktop/mail/2021-1-MAILRU-SDET-Python-K-Zheltova/final_project/config_dir:/etc/selenoid/:ro \
+            aerokube/selenoid:1.10.3 \
+            -container-network final-project-network'
+      }
+    }
+    stage('Test') {
+      steps {
+        echo 'Testing..'
+        bat 'docker run --rm \
+        --network final-project-network \
+        -v C:/Users/maste/Desktop/mail/2021-1-MAILRU-SDET-Python-K-Zheltova/final_project/tests:/tests \
+        -v C:/WINDOWS/system32/config/systemprofile/AppData/Local/Jenkins/.jenkins/workspace/final-project/reports:/jenkins/allure \
+        tests:latest \
+        pytest /tests -n 5 --alluredir=/jenkins/allure'
+      }
+    }
+   }
+   post {
+        always {
+          bat 'docker stop selenoid_final_project'
+          bat 'docker-compose down'
+        }
+    }
+  }
