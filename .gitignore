@@ -113,14 +113,14 @@ ENV/
 env.bak/
 venv.bak/
 
-# Spyder project settings
+# Spyder project creds.py
 .spyderproject
 .spyproject
 
 #pycharm
 .idea
 
-# Rope project settings
+# Rope project creds.py
 .ropeproject
 
 # mkdocs documentation
