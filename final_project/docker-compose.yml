@@ -1,0 +1,52 @@
+version: "2.4"
+
+networks:
+    final-project-network:
+        external:
+            name: final-project-network
+
+services:
+    db:
+        image: percona:latest
+        container_name: db_final_project
+        restart: always
+        ports:
+            - "3306:3306"
+        volumes:
+            - C:/Users/maste/Desktop/mail/2021-1-MAILRU-SDET-Python-K-Zheltova/final_project/config_dir/init.sql:/docker-entrypoint-initdb.d/init.sql
+        environment:
+            MYSQL_ROOT_USER: root
+            MYSQL_ROOT_PASSWORD: pass
+        healthcheck:
+            test: [ "CMD", "mysqladmin", "-uroot", "-ppass", "ping", "-h", "127.0.0.1" ]
+            timeout: 30s
+            retries: 10
+        networks:
+            - final-project-network
+
+    mock:
+        image: vk_mock:v3
+        container_name: vk_api_final_project
+        build: .
+        ports:
+            - "5000:5000"
+        networks:
+            - final-project-network
+
+    app:
+        image: myapp
+        container_name: myapp_final_project
+        ports:
+            - "8082:8082"
+        depends_on:
+            db:
+                condition: service_healthy
+        volumes:
+            - C:/Users/maste/Desktop/mail/2021-1-MAILRU-SDET-Python-K-Zheltova/final_project/config_dir:/config_dir
+        entrypoint: "/app/myapp --config=/config_dir/config"
+        links:
+            - db
+            - mock
+        restart: always
+        networks:
+            - final-project-network

@@ -1,0 +1,8 @@
+pytest==6.2.2
+sqlalchemy==1.4.13
+pymysql==1.0.2
+selenium==4.0.0.b2
+webdriver-manager==3.3.0
+allure-pytest==2.8.40
+pytest-xdist==2.2.1
+requests
