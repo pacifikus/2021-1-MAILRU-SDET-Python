@@ -1,9 +1,14 @@
 # 2021-1-MAILRU-SDET-Python
 
-Автоматизированное тестирование на Python
+Python QA Course from Mail.RU Group
 
-- python 3
-- выбор и настройка тестового окружения
-- современные фреймворки (pytest/flask/sqlalchemy/etc)
-- практики написания различных типов тестов (WEB/API)
-- CI/CD
+- Pytest
+- Selenium WebDriver
+- PageObject pattern
+- Selenium reporting
+- Selenium remote
+- API
+- MySQL ORM
+- Mocks & Stubs
+- Docker
+- Jenkins
